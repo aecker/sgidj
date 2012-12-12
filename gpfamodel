@@ -1,0 +1,9 @@
+path    ~/lab/libraries/matlab
+run     ~/lab/projects/acq/alex_setPath.m 
+run     ~/lab/projects/anesthesia/code/setPath.m
+run     ~/lab/cluster/dj/djstart.m
+
+table   nc.GpfaModelSet
+restr   'sort_method_num = 5 AND subject_id IN (9, 11)'
+
+table   nc.GpfaCovExpl

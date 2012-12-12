@@ -1,0 +1,7 @@
+path    ~/lab/libraries/matlab
+run     ~/lab/projects/acq/alex_setPath.m 
+run     ~/lab/projects/anesthesia/code/setPath.m
+path    ~/lab/libraries/various/mex_tt
+run     ~/lab/cluster/dj/djstart.m
+
+table   nc.LnpModel3
