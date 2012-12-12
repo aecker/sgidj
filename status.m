@@ -27,7 +27,13 @@ for i = 1 : k
     else
         restr = '';
     end
-    n = count((tables{i}.popRel & restrictions{i}) - tables{i});
-    fprintf('%-8s%s%s\n', sprintf('[%d]', n), class(tables{i}), restr)
+    unpopulated = count((tables{i}.popRel & restrictions{i}) - tables{i});
+    jobTable = eval([tables{i}.schema.package '.Jobs']);
+    errors = count(jobTable & struct('status', 'error', 'table_name', class(tables{i})));
+    running = count(jobTable & struct('status', 'reserved', 'table_name', class(tables{i})));
+    fprintf('Table %s%s\n', class(tables{i}), restr)
+    fprintf('  %d unpopulated\n', unpopulated)
+    fprintf('  %d errors\n', errors)
+    fprintf('  %d running\n', running)
+    fprintf('\n')
 end
-fprintf('\n')
