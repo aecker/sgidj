@@ -31,7 +31,7 @@ try
         if ischar(wait)
             wait = str2double(wait);
         end
-        pause(wait)
+        pause(2 * wait)
     end
     
     % parse config file
