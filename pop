@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:~/lab/libraries/mym/
+cd ~/lab/cluster/dj
+start_matlab -singleCompThread -nodisplay -r "pop $1 $SGE_TASK_ID; exit"
