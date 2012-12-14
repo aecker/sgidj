@@ -12,7 +12,7 @@ end
 result = struct('cmd', {}, 'arg', {});
 while ~feof(fid)
     str = strtrim(fgetl(fid));
-    res = regexp(str, '(?<cmd>run|path|table|restr)\s*(?<arg>.)*', 'names', 'once');
+    res = regexp(str, '^\s*(?<cmd>%|run|path|table|restr)\s*(?<arg>.)*', 'names', 'once');
     if ~isempty(res)
         result(end + 1) = res; %#ok<AGROW>
     end
