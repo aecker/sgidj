@@ -32,6 +32,7 @@ try
             wait = str2double(wait);
         end
         pause(2 * wait)
+        rng(wait)
     end
     
     % parse config file
