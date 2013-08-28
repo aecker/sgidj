@@ -3,7 +3,62 @@ run     ~/lab/projects/acq/alex_setPath.m
 run     ~/lab/projects/anesthesia/code/setPath.m
 run     ~/lab/cluster/dj/djstart.m
 
-table   nc.GpfaModelSet
-restr   'sort_method_num = 5 AND subject_id IN (9, 11)'
 
-table   nc.GpfaCovExpl
+table   stimulation.StimTrialGroup
+restr   ae.ProjectsStimulation & 'project_name = "NoiseCorrAnesthesia"'
+
+table   nc.Gratings
+restr   ae.ProjectsStimulation & 'project_name = "NoiseCorrAnesthesia"'
+
+# awake data
+table   ae.SpikeCountSet
+restr   'subject_id IN (8, 23) AND sort_method_num = 5 AND spike_count_end = 530'
+
+# anesthetized data
+table   ae.SpikeCountSet
+restr   'subject_id IN (9, 11, 28) AND sort_method_num = 5 AND spike_count_end IN (530, 2030)'
+
+# other dependencies for GPFA model
+table   ae.SpikesByTrialSet
+table   nc.UnitPairSet
+table   nc.UnitStatsSet
+table   nc.CleanPairSet
+table   nc.OriTuningSet
+table   nc.NoiseCorrelationSet
+
+# GPFA model
+
+# evaluating different transforms with and without z-scores
+table   nc.GpfaModelSet
+restr   nc.GpfaParams & 'bin_size = 100 AND max_latent_dim = 1 AND kfold_cv = 2'
+
+# single-factor models with and without cross-validation
+table   nc.GpfaModelSet
+restr   'transform_num = 5'
+restr   nc.GpfaParams & 'bin_size = 100 AND max_latent_dim = 1 AND kfold_cv IN (1, 2, 5)'
+
+# multi-factor models
+table   nc.GpfaModelSet
+restr   'transform_num = 5'
+restr   nc.GpfaParams & 'bin_size = 100 AND max_latent_dim = 10 AND kfold_cv = 2 AND zscore = 0 AND max_instability = 0.1'
+
+# multi-factor models without CV
+table   nc.GpfaModelSet
+restr   'transform_num = 5'
+restr   nc.GpfaParams & 'bin_size = 100 AND max_latent_dim = 3 AND kfold_cv = 1 AND zscore = 0 AND max_instability = 0.1'
+
+
+# Analysis of model results
+table   nc.GpfaResidCorrSet
+restr   'transform_num = 5'
+restr   nc.GpfaParams & 'bin_size = 100 AND max_latent_dim = 1 AND kfold_cv IN (2, 5) AND zscore = 0 AND max_instability = 0.1'
+
+
+#table   nc.GpfaCovExpl
+#table   nc.LfpGpfaCorr
+#table   nc.LfpPowerRatioGpfaSet
+
+
+% check for saturation of recordings
+#table   ae.AcqSatSet
+#restr   'subject_id IN (8, 9, 11, 28, 23)'
