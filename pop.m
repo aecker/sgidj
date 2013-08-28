@@ -31,7 +31,7 @@ try
         if ischar(wait)
             wait = str2double(wait);
         end
-        pause(2 * wait)
+        pause(5 * wait)
         rng(wait)
     end
     
